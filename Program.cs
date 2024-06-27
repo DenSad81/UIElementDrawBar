@@ -12,33 +12,33 @@ class Program
         DrawBar(50, colorOfActivBar: ConsoleColor.Green, posCursorY: 3);
     }
 
-    static void DrawBar(int value, int maxValue = 10, char activBar = '#', char pasivBar = '_', ConsoleColor colorOfActivBar = ConsoleColor.Green, int posCursorX = 0, int posCursorY = 0)
+    static void DrawBar(int persentsOfFill, int lenghtOfBar = 10, char signOfActivBar = '#', char signOPpasivBar = '_', ConsoleColor colorOfActivBar = ConsoleColor.Green, int posCursorX = 0, int posCursorY = 0)
     {
+        char signOfBeginOfBar = '[';
+        char signOfEndOfBar = ']';
+        int hungretPersents = 100;
+
         Console.SetCursorPosition(posCursorX, posCursorY);
         ConsoleColor memoryOfColor = Console.BackgroundColor;
         Console.BackgroundColor = colorOfActivBar;
-        Console.Write('[');
+        Console.Write(signOfBeginOfBar);
 
-        float persents = ((float)value / 100.0f);
-        value = (int)(persents * maxValue);
+        persentsOfFill = (persentsOfFill * lenghtOfBar) / hungretPersents;
 
-        if (value > maxValue)
-            value = maxValue;
+        if (persentsOfFill > lenghtOfBar)
+            persentsOfFill = lenghtOfBar;
 
-        for (int i = 0; i < maxValue; i++)
-        {
-            if (i < value)
-            {
-                Console.Write(activBar);
-            }
-            else
-            {
-                Console.BackgroundColor = memoryOfColor;
-                Console.Write(pasivBar);
-            }
-        }
+        Filling(0, persentsOfFill, signOfActivBar);
+        Console.BackgroundColor = memoryOfColor;
+        Filling(persentsOfFill, lenghtOfBar, signOPpasivBar);
 
-        Console.Write(']');
+        Console.Write(signOfEndOfBar);
         Console.WriteLine();
+    }
+
+    static void Filling(int start, int finish, char simbol)
+    {
+        for (int i = start; i < finish; i++)
+            Console.Write(simbol);
     }
 }
